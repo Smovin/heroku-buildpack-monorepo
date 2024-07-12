@@ -25,7 +25,8 @@ rm -rf "${BUILD_DIR}"/*
 # Ensure wildcards in globs match dotfiles too.
 # Do this after the rm, because during CI the indyno plans run before us and leave DB state in .xxx dirs
 shopt -s dotglob
-mv "${STAGE}/$(basename "$APP_BASE")"/* "${BUILD_DIR}"
+cp -rf "${STAGE}/$(basename "$APP_BASE")"/* "${BUILD_DIR}"
+rm -rf "${STAGE}/$(basename "$APP_BASE")"/*
 
 if [ $? -ne 0 ]; then
     echo "FAILED to copy directory into place" | indent
@@ -33,4 +34,3 @@ if [ $? -ne 0 ]; then
 fi
 
 echo "Copied ${APP_BASE} to root of app successfully" | indent
-
